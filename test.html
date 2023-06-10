@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>未来日記</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.5;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            flex: 1;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-button {
+            background-color: #4285F4;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-button:hover {
+            background-color: #3367D6;
+        }
+
+        .schedule-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .time {
+            font-weight: bold;
+            color: #4285F4;
+        }
+
+        .activity {
+            margin-left: 20px;
+        }
+
+        .schedule-item {
+            padding: 12px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>未来日記</h1>
+        <div class="form-container">
+            <input type="text" class="form-input" id="prompt" placeholder="未来の予定を入力してください" required>
+            <button class="form-button" onclick="updateSchedule()">更新</button>
+        </div>
+        <ul class="schedule-list" id="schedule">
+            <li class="schedule-item"><span class="time">5:00</span>: 朝食（ごはん・卵・バナナ）</li>
+            <li class="schedule-item"><span class="time">6:00</span>: ジョギング（30分）</li>
+            <li class="schedule-item"><span class="time">7:00</span>: 筋トレ（30分）</li>
+            <li class="schedule-item"><span class="time">8:00</span>: 朝食（ごはん・焼き肉・野菜）</li>
+            <li class="schedule-item"><span class="time">9:00</span>: 腹筋（30分）</li>
+            <li class="schedule-item"><span class="time">10:00</span>: 昼食（ごはん・チキンカツ・サラダ）</li>
+            <li class="schedule-item"><span class="time">11:00</span>: ウォーキング（60分）</li>
+            <li class="schedule-item"><span class="time">12:00</span>: 昼食（ごはん・ほうれん草・ハム）</li>
+            <li class="schedule-item"><span class="time">13:00</span>: ストレッチ（30分）</li>
+            <li class="schedule-item"><span class="time">14:00</span>: タンパク質ドリンク（1杯）</li>
+            <li class="schedule-item"><span class="time">15:00</span>: プールへ行く（60分）</li>
+            <li class="schedule-item"><span class="time">16:00</span>: スイミング（60分）</li>
+            <li class="schedule-item"><span class="time">17:00</span>: タンパク質ドリンク（1杯）</li>
+            <li class="schedule-item"><span class="time">18:00</span>: 夕食（ごはん・魚・サラダ）</li>
+            <li class="schedule-item"><span class="time">19:00</span>: 歩く（60分）</li>
+            <li class="schedule-item"><span class="time">20:00</span>: 夕食（ごはん・鶏肉・野菜）</li>
+        </ul>
+    </div>
+
+    <script>
+        function updateSchedule() {
+            const promptInput = document.getElementById('prompt');
+            const schedule = document.getElementById('schedule');
+
+            // プロンプトの値を取得し、スケジュールを更新
+            const promptValue = promptInput.value;
+            if (promptValue) {
+                schedule.innerHTML = generateSchedule(promptValue);
+            }
+        }
+
+        function generateSchedule(prompt) {
+            // 入力されたプロンプトに基づいてスケジュールを生成
+            // プロンプトに応じたスケジュールを返すロジックを実装してください
+
+            // 以下は例として、入力されたプロンプトを表示するだけのスケジュールを返すコードです
+            const schedule = `
+        <li class="schedule-item"><span class="time">5:00</span>: 朝食（ごはん・卵・バナナ）</li>
+        <li class="schedule-item"><span class="time">6:00</span>: ジョギング（30分）</li>
+        <li class="schedule-item"><span class="time">7:00</span>: 筋トレ（30分）</li>
+        <li class="schedule-item"><span class="time">8:00</span>: 朝食（ごはん・焼き肉・野菜）</li>
+        <li class="schedule-item"><span class="time">9:00</span>: 腹筋（30分）</li>
+        <li class="schedule-item"><span class="time">10:00</span>: 昼食（ごはん・チキンカツ・サラダ）</li>
+        <li class="schedule-item"><span class="time">11:00</span>: ウォーキング（60分）</li>
+        <li class="schedule-item"><span class="time">12:00</span>: 昼食（ごはん・ほうれん草・ハム）</li>
+        <li class="schedule-item"><span class="time">13:00</span>: ストレッチ（30分）</li>
+        <li class="schedule-item"><span class="time">14:00</span>: タンパク質ドリンク（1杯）</li>
+        <li class="schedule-item"><span class="time">15:00</span>: プールへ行く（60分）</li>
+        <li class="schedule-item"><span class="time">16:00</span>: スイミング（60分）</li>
+        <li class="schedule-item"><span class="time">17:00</span>: タンパク質ドリンク（1杯）</li>
+        <li class="schedule-item"><span class="time">18:00</span>: 夕食（ごはん・魚・サラダ）</li>
+        <li class="schedule-item"><span class="time">19:00</span>: 歩く（60分）</li>
+        <li class="schedule-item"><span class="time">20:00</span>: 夕食（ごはん・鶏肉・野菜）</li>
+      `;
+
+            return schedule;
+        }
+    </script>
+</body>
+
+</html>
