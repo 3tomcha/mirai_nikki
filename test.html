@@ -91,8 +91,10 @@
             <input type="text" class="form-input" id="prompt" placeholder="未来の予定を入力してください" required>
             <button class="form-button" onclick="updateSchedule()">更新</button>
         </div>
+        <button class="form-button" onclick="generateImage()">画像生成</button>
         <ul class="schedule-list" id="schedule">
             <li class="schedule-item"><span class="time">5:00</span>: 朝食（ごはん・卵・バナナ）</li>
+            <img id="generatedImage" src=""></img>
             <li class="schedule-item"><span class="time">6:00</span>: ジョギング（30分）</li>
             <li class="schedule-item"><span class="time">7:00</span>: 筋トレ（30分）</li>
             <li class="schedule-item"><span class="time">8:00</span>: 朝食（ごはん・焼き肉・野菜）</li>
@@ -148,6 +150,20 @@
       `;
 
             return schedule;
+        }
+
+        function generateImage() {
+            const prompt = "5:00: 朝食（ごはん・卵・バナナ）"
+            let url = `http://127.0.0.1:5000/?prompt=${encodeURIComponent(prompt)}`;
+
+            fetch(url)
+                .then(response => response.blob()) // レスポンスを Blob として解釈
+                .then(blob => {
+                    var imageUrl = URL.createObjectURL(blob); // Blob を URL に変換
+                    console.log(imageUrl);
+                    document.getElementById('generatedImage').src = imageUrl; // 画像の src を更新
+                })
+                .catch(error => console.error(error));
         }
     </script>
 </body>
