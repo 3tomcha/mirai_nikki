@@ -1,18 +1,20 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useGenerateImage } from './hooks/useGenerateImage';
+import { useGenerateschedule } from './hooks/useGenerateSchedule';
+import ScheduleItem from './components/ScheduleItem';
 
 function App() {
   const [prompt, setPrompt] = useState('');
-  const [schedule, setSchedule] = useState('');
+  const { image, fetchImage } = useGenerateImage();
+  const { schedule, fetchSchedule } = useGenerateschedule();
 
   const handlePromptChange = (event) => {
     setPrompt(event.target.value);
   };
 
   const updateSchedule = () => {
-    // 入力されたプロンプトに基づいてスケジュールを更新するロジックを実装してください
-    const generatedSchedule = generateSchedule(prompt);
-    setSchedule(generatedSchedule);
+    fetchSchedule(prompt);
   };
 
   const generateSchedule = (prompt) => {
@@ -72,60 +74,11 @@ function App() {
           更新
         </button>
       </div>
-      <button className="form-button" onClick={generateImage}>
+      <button className="form-button" onClick={fetchImage}>
         画像生成
       </button>
       <ul className="schedule-list" id="schedule">
-        {schedule}
-        <li className="schedule-item">
-          <span className="time">5:00</span>: 朝食（ごはん・卵・バナナ）
-        </li>
-        <img id="generatedImage" src="" alt="" />
-        <li className="schedule-item">
-          <span className="time">6:00</span>: ジョギング（30分）
-        </li>
-        <li className="schedule-item">
-          <span className="time">7:00</span>: 筋トレ（30分）
-        </li>
-        <li className="schedule-item">
-          <span className="time">8:00</span>: 朝食（ごはん・焼き肉・野菜）
-        </li>
-        <li className="schedule-item">
-          <span className="time">9:00</span>: 腹筋（30分）
-        </li>
-        <li className="schedule-item">
-          <span className="time">10:00</span>: 昼食（ごはん・チキンカツ・サラダ）
-        </li>
-        <li className="schedule-item">
-          <span className="time">11:00</span>: ウォーキング（60分）
-        </li>
-        <li className="schedule-item">
-          <span className="time">12:00</span>: 昼食（ごはん・ほうれん草・ハム）
-        </li>
-        <li className="schedule-item">
-          <span className="time">13:00</span>: ストレッチ（30分）
-        </li>
-        <li className="schedule-item">
-          <span className="time">14:00</span>: タンパク質ドリンク（1杯）
-        </li>
-        <li className="schedule-item">
-          <span className="time">15:00</span>: プールへ行く（60分）
-        </li>
-        <li className="schedule-item">
-          <span className="time">16:00</span>: スイミング（60分）
-        </li>
-        <li className="schedule-item">
-          <span className="time">17:00</span>: タンパク質ドリンク（1杯）
-        </li>
-        <li className="schedule-item">
-          <span className="time">18:00</span>: 夕食（ごはん・魚・サラダ）
-        </li>
-        <li className="schedule-item">
-          <span className="time">19:00</span>: 歩く（60分）
-        </li>
-        <li className="schedule-item">
-          <span className="time">20:00</span>: 夕食（ごはん・鶏肉・野菜）
-        </li>
+        <ScheduleItem time="5:00" do="朝食（ごはん・卵・バナナ）" />
       </ul>
     </div>
   )
