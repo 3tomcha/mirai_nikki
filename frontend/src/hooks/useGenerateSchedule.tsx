@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-type Schedule = {
+export type Schedule = {
   time: string;
   value: string;
 }

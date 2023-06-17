@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState } from 'react';
 import { useGenerateImage } from './hooks/useGenerateImage.tsx';
 import { useGenerateschedule } from './hooks/useGenerateSchedule.tsx';
-import ScheduleItem from './components/ScheduleItem';
+import ScheduleItem from './components/ScheduleItem.tsx';
 
 function App() {
   const [prompt, setPrompt] = useState('');
@@ -55,7 +55,7 @@ function App() {
         <ul className="schedule-list" id="schedule">
           {schedule.map((item) => {
             return (
-              <ScheduleItem time={item.time} do={item.value} />
+              <ScheduleItem {...item} />
             )
           })}
         </ul>
