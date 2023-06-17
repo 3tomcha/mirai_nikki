@@ -4,7 +4,8 @@ export function useGenerateImage() {
   const [image, setImage] = useState("");
 
   const fetchImage = async (_prompt: string) => {
-    const url = `http://127.0.0.1:5000/image?prompt=${encodeURIComponent(_prompt)}`;
+    const API_URL = process.env.REACT_APP_API_URL;
+    const url = `${API_URL}/image?prompt=${encodeURIComponent(_prompt)}`;
 
     await fetch(url)
       .then((response) => response.blob()) // レスポンスを Blob として解釈
