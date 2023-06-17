@@ -3,6 +3,9 @@ from dotenv import load_dotenv
 import os
 from flask import Flask, request, send_file
 from flask_cors import CORS
+from stability_sdk import client
+import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
+from PIL import Image
 
 load_dotenv()
 openai.api_key=os.getenv("OPENAI_API_KEY")
@@ -26,6 +29,25 @@ def chat_with_gpt():
     reply = response.choices[0].text.strip()
 
     return reply
+
+@app.route("/image")
+def generate():
+    req = request.args
+    propmt = req.get("prompt", "")
+    answers = stability_api.generate(
+        prompt=propmt
+    )
+    for resp in answers:
+        for artifact in resp.artifacts:
+            if artifact.finish_reason == generation.FILTER:
+                warnings.warn(
+                    "Your request activated the API's safety filters and could not be processed."
+                    "Please modify the prompt and try again.")
+            if artifact.type == generation.ARTIFACT_IMAGE:
+                return send_file(
+                    io.BytesIO(artifact.binary),
+                    mimetype='image/png'
+                )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

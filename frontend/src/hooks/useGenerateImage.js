@@ -4,7 +4,7 @@ export function useGenerateImage() {
   const [image, setImage] = useState("");
 
   const fetchImage = () => {
-    const url = `http://127.0.0.1:5000/?prompt=${encodeURIComponent(prompt)}`;
+    const url = `http://127.0.0.1:5000/image?prompt=${encodeURIComponent(prompt)}`;
 
     fetch(url)
       .then((response) => response.blob()) // レスポンスを Blob として解釈

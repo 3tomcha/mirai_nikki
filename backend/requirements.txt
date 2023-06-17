@@ -3,3 +3,4 @@ stability-sdk
 python-dotenv
 flask_cors
 openai
+pillow
