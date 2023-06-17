@@ -20,7 +20,7 @@ def chat_with_gpt():
     response = openai.Completion.create(
         engine='text-davinci-003',  # 使用するエンジンを指定します
         prompt=prompt,
-        max_tokens=500,  # ChatGPTの応答の最大トークン数
+        max_tokens=1000,  # ChatGPTの応答の最大トークン数
         temperature=0.7,  # 生成される応答の多様性を制御します
         n=1,  # 生成する応答の数
         stop=None,  # 応答を停止するトリガーワードを指定します（必要に応じて使用）

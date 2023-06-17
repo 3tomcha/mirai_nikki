@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import { useGenerateImage } from './hooks/useGenerateImage';
-import { useGenerateschedule } from './hooks/useGenerateSchedule';
+import { useGenerateImage } from './hooks/useGenerateImage.tsx';
+import { useGenerateschedule } from './hooks/useGenerateSchedule.tsx';
 import ScheduleItem from './components/ScheduleItem';
 
 function App() {
@@ -77,9 +77,15 @@ function App() {
       <button className="form-button" onClick={fetchImage}>
         画像生成
       </button>
-      <ul className="schedule-list" id="schedule">
-        <ScheduleItem time="5:00" do="朝食（ごはん・卵・バナナ）" />
-      </ul>
+      {schedule && (
+        <ul className="schedule-list" id="schedule">
+          {schedule.map((item) => {
+            return (
+              <ScheduleItem time={item.time} do={item.value} />
+            )
+          })}
+        </ul>
+      )}
     </div>
   )
 }
