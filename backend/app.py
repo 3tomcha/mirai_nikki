@@ -1,11 +1,19 @@
 import openai
 from dotenv import load_dotenv
 import os
+from flask import Flask, request, send_file
+from flask_cors import CORS
 
 load_dotenv()
 openai.api_key=os.getenv("OPENAI_API_KEY")
 
-def chat_with_gpt(prompt): 
+app = Flask(__name__)
+CORS(app) # これがCORSを許可する設定です
+
+@app.route("/chat")
+def chat_with_gpt(): 
+    req = request.args
+    prompt = req.get("prompt", "")
     response = openai.Completion.create(
         engine='text-davinci-003',  # 使用するエンジンを指定します
         prompt=prompt,
@@ -19,11 +27,6 @@ def chat_with_gpt(prompt):
 
     return reply
 
-while True:
-    user_input = input("ユーザー: ")
-    if user_input.lower() == "bye":
-        print("ChatGPT: さようなら！またお会いしましょう！")
-        break
-    
-    response = chat_with_gpt(user_input)
-    print("AI: " + response)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")
+
