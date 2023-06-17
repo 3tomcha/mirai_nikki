@@ -6,12 +6,18 @@ from flask_cors import CORS
 from stability_sdk import client
 import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 from PIL import Image
+import io
 
 load_dotenv()
 openai.api_key=os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
 CORS(app) # これがCORSを許可する設定です
+
+stability_api = client.StabilityInference(
+    key=os.environ.get("STABILITY_KEY"),
+    verbose=True,
+)
 
 @app.route("/chat")
 def chat_with_gpt(): 

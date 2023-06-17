@@ -1,15 +1,16 @@
 import './App.css';
-import React, { useState } from 'react';
-import { useGenerateImage } from './hooks/useGenerateImage.tsx';
-import { useGenerateschedule } from './hooks/useGenerateSchedule.tsx';
-import ScheduleItem from './components/ScheduleItem.tsx';
+import React, { useEffect, useState } from 'react';
+import { useGenerateImage } from './hooks/useGenerateImage';
+import { useGenerateschedule } from './hooks/useGenerateSchedule';
+import ScheduleItem from './components/ScheduleItem';
 
 function App() {
   const [prompt, setPrompt] = useState('');
+  const [randomIndex, setRandomIndex] = useState(-1);
   const { image, fetchImage } = useGenerateImage();
-  const { schedule, fetchSchedule } = useGenerateschedule();
+  const { schedule, fetchSchedule, setSchedule } = useGenerateschedule();
 
-  const handlePromptChange = (event) => {
+  const handlePromptChange = (event: any) => {
     setPrompt(event.target.value);
   };
 
@@ -17,19 +18,27 @@ function App() {
     fetchSchedule(prompt);
   };
 
-  const generateImage = () => {
-    // 画像生成のAPI呼び出しを行うロジックを実装してください
-    const url = `http://127.0.0.1:5000/?prompt=${encodeURIComponent(prompt)}`;
+  const updateImage = async () => {
+    const itemsWithoutImage = schedule.filter(item => !item.image)
+    const _randomIndex = Math.floor(Math.random() * itemsWithoutImage.length)
+    setRandomIndex(_randomIndex);
+    const randomItem = itemsWithoutImage[_randomIndex];
+    console.log(randomItem)
+    await fetchImage(randomItem.value)
+  }
 
-    fetch(url)
-      .then((response) => response.blob()) // レスポンスを Blob として解釈
-      .then((blob) => {
-        const imageUrl = URL.createObjectURL(blob); // Blob を URL に変換
-        console.log(imageUrl);
-        document.getElementById('generatedImage').src = imageUrl; // 画像の src を更新
-      })
-      .catch((error) => console.error(error));
-  };
+  useEffect(() => {
+    console.log(image)
+    const newSchedule = schedule.map((item, index) => {
+      if (index === randomIndex) {
+        item.image = image
+      }
+      return item
+    })
+    console.log(newSchedule)
+    setSchedule(newSchedule)
+  }, [image])
+
 
   return (
     <div className="container">
@@ -48,14 +57,14 @@ function App() {
           更新
         </button>
       </div>
-      <button className="form-button" onClick={fetchImage}>
+      <button className="form-button" onClick={updateImage}>
         画像生成
       </button>
       {schedule && (
         <ul className="schedule-list" id="schedule">
           {schedule.map((item) => {
             return (
-              <ScheduleItem {...item} />
+              <ScheduleItem {...item} key={item.time} />
             )
           })}
         </ul>
