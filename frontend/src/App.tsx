@@ -21,6 +21,7 @@ function App() {
   const updateImage = async () => {
     const itemsWithoutImage = schedule.filter(item => !item.image)
     const _randomIndex = Math.floor(Math.random() * itemsWithoutImage.length)
+    console.log(_randomIndex)
     setRandomIndex(_randomIndex);
     const randomItem = itemsWithoutImage[_randomIndex];
     console.log(randomItem)
@@ -29,8 +30,9 @@ function App() {
 
   useEffect(() => {
     console.log(image)
+    console.log(randomIndex)
     const newSchedule = schedule.map((item, index) => {
-      if (index === randomIndex) {
+      if (index - 1 === randomIndex) {
         item.image = image
       }
       return item
