@@ -35,5 +35,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@typechain/ethers-v6": "^0.4.0",
+    "typechain": "^8.2.0"
   }
 }
