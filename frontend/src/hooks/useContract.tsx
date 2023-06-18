@@ -36,18 +36,30 @@ export default function useContract() {
     const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, signer) as unknown as GoalContract;
     const goalToken = new ethers.Contract(goalTokenAddress, GoalTokenAbi, signer) as unknown as GoalToken;
     // approveする
-    await goalToken.approve(goalContractAddress, 1).catch((err) => {
+    await goalToken.approve(goalContractAddress, 10).catch((err) => {
       console.log(err);
     });
-    await goalContract.participate(1).catch((err) => {
+    await goalContract.participate(10).catch((err) => {
       console.log(err);
     });
+  }
+
+  const addVerifier = async (address: string) => {
+    const provider = new ethers.BrowserProvider(ethereum);
+    console.log(provider);
+    const signer = await provider.getSigner();
+    const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, signer) as unknown as GoalContract;
+    await goalContract.addVerifier(address).catch((err) => {
+      console.log(err);
+    });
+    alert(`証人は${address}です。達成したら証人に報告してね。`)
   }
 
   return {
     init,
     connectMetamask,
     success,
-    participate
+    participate,
+    addVerifier
   }
 }

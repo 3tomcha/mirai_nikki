@@ -79,6 +79,9 @@ function App() {
             <button className="form-button3" onClick={participate}>
               約束する！
             </button>
+            <button className="form-button3" onClick={participate}>
+              証人を決める
+            </button>
             <ul className="schedule-list" id="schedule">
               {schedule.map((item) => {
                 return (
