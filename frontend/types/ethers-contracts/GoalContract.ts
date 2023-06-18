@@ -24,16 +24,28 @@ import type {
 export interface GoalContractInterface extends Interface {
   getFunction(
     nameOrSignature:
-      | "participate"
+      | "addVerifier"
+      | "canWithdraw"
       | "goalAmount"
       | "goalOwner"
       | "goalToken"
-      | "participants"
+      | "hasVerified"
+      | "markGoalAchieved"
+      | "participant"
+      | "participate"
+      | "setWithdrawPermission"
+      | "updateParticipants"
+      | "verifier"
+      | "withdrawTokens"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "participate",
-    values: [BigNumberish]
+    functionFragment: "addVerifier",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "canWithdraw",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "goalAmount",
@@ -42,19 +54,73 @@ export interface GoalContractInterface extends Interface {
   encodeFunctionData(functionFragment: "goalOwner", values?: undefined): string;
   encodeFunctionData(functionFragment: "goalToken", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "participants",
+    functionFragment: "hasVerified",
     values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "markGoalAchieved",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "participant",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "participate",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setWithdrawPermission",
+    values: [boolean]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateParticipants",
+    values: [AddressLike, AddressLike]
+  ): string;
+  encodeFunctionData(functionFragment: "verifier", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "withdrawTokens",
+    values?: undefined
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "participate",
+    functionFragment: "addVerifier",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "canWithdraw",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "goalAmount", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "goalOwner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "goalToken", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "participants",
+    functionFragment: "hasVerified",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "markGoalAchieved",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "participant",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "participate",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setWithdrawPermission",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateParticipants",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "verifier", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawTokens",
     data: BytesLike
   ): Result;
 }
@@ -102,11 +168,13 @@ export interface GoalContract extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
-  participate: TypedContractMethod<
-    [amount: BigNumberish],
+  addVerifier: TypedContractMethod<
+    [_verifier: AddressLike],
     [void],
     "nonpayable"
   >;
+
+  canWithdraw: TypedContractMethod<[], [boolean], "view">;
 
   goalAmount: TypedContractMethod<[], [bigint], "view">;
 
@@ -114,19 +182,44 @@ export interface GoalContract extends BaseContract {
 
   goalToken: TypedContractMethod<[], [string], "view">;
 
-  participants: TypedContractMethod<
-    [arg0: AddressLike],
-    [[bigint, boolean] & { amount: bigint; participated: boolean }],
-    "view"
+  hasVerified: TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
+
+  markGoalAchieved: TypedContractMethod<[], [void], "nonpayable">;
+
+  participant: TypedContractMethod<[], [string], "view">;
+
+  participate: TypedContractMethod<
+    [amount: BigNumberish],
+    [void],
+    "nonpayable"
   >;
+
+  setWithdrawPermission: TypedContractMethod<
+    [_canWithdraw: boolean],
+    [void],
+    "nonpayable"
+  >;
+
+  updateParticipants: TypedContractMethod<
+    [_newParticipant: AddressLike, _newVerifier: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  verifier: TypedContractMethod<[], [string], "view">;
+
+  withdrawTokens: TypedContractMethod<[], [void], "nonpayable">;
 
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
 
   getFunction(
-    nameOrSignature: "participate"
-  ): TypedContractMethod<[amount: BigNumberish], [void], "nonpayable">;
+    nameOrSignature: "addVerifier"
+  ): TypedContractMethod<[_verifier: AddressLike], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "canWithdraw"
+  ): TypedContractMethod<[], [boolean], "view">;
   getFunction(
     nameOrSignature: "goalAmount"
   ): TypedContractMethod<[], [bigint], "view">;
@@ -137,12 +230,33 @@ export interface GoalContract extends BaseContract {
     nameOrSignature: "goalToken"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
-    nameOrSignature: "participants"
+    nameOrSignature: "hasVerified"
+  ): TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "markGoalAchieved"
+  ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "participant"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "participate"
+  ): TypedContractMethod<[amount: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setWithdrawPermission"
+  ): TypedContractMethod<[_canWithdraw: boolean], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "updateParticipants"
   ): TypedContractMethod<
-    [arg0: AddressLike],
-    [[bigint, boolean] & { amount: bigint; participated: boolean }],
-    "view"
+    [_newParticipant: AddressLike, _newVerifier: AddressLike],
+    [void],
+    "nonpayable"
   >;
+  getFunction(
+    nameOrSignature: "verifier"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "withdrawTokens"
+  ): TypedContractMethod<[], [void], "nonpayable">;
 
   filters: {};
 }
