@@ -10,7 +10,7 @@ function App() {
   const [randomIndex, setRandomIndex] = useState(-1);
   const { image, fetchImage } = useGenerateImage();
   const { schedule, fetchSchedule, setSchedule } = useGenerateschedule();
-  const { init, connectMetamask, success } = useContract();
+  const { init, connectMetamask, success, participate } = useContract();
 
   useEffect(() => {
     init();
@@ -66,7 +66,7 @@ function App() {
           onChange={handlePromptChange}
           required
         />
-        <button className="form-button" onClick={updateSchedule}>
+        <button className="form-button" onClick={participate}>
           更新
         </button>
       </div>

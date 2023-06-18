@@ -29,13 +29,16 @@ export default function useContract() {
   const participate = async () => {
     const provider = new ethers.BrowserProvider(ethereum);
     console.log(provider);
-    const signer = provider.getSigner();
-    const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, signer) as GoalContract;
+    const signer = await provider.getSigner();
+    const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, signer) as unknown as GoalContract;
+    // approveする
+    await goalContract.participate(1);
   }
 
   return {
     init,
     connectMetamask,
-    success
+    success,
+    participate
   }
 }
