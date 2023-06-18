@@ -1,10 +1,13 @@
 import { ethers } from 'ethers';
 import { useState } from 'react';
+import { GoalContract } from '../../types/ethers-contracts/GoalContract';
+import GoalContractAbi from "../abi/GoalContract.json"
 
 export default function useContract() {
   const [ethereum, setEthereum] = useState<any>();
   const [accounts, setAccounts] = useState<any>();
   const [success, setSuccess] = useState<boolean>(false);
+  const goalContractAddress = "0x48395e3F6F183E7216957A1c0bABAA3967Ed8c20"
 
   const init = () => {
     if ((window as any).ethereum) {
@@ -21,6 +24,13 @@ export default function useContract() {
     if (res) {
       setAccounts(res);
     }
+  }
+
+  const participate = async () => {
+    const provider = new ethers.BrowserProvider(ethereum);
+    console.log(provider);
+    const signer = provider.getSigner();
+    const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, signer) as GoalContract;
   }
 
   return {
