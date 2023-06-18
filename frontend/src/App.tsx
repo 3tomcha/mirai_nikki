@@ -73,10 +73,10 @@ function App() {
       {
         schedule.length > 0 && (
           <>
-            <button className="form-button" onClick={updateImage} style={{ marginRight: '2em' }}>
+            <button className="form-button2" onClick={updateImage} style={{ marginRight: '2em' }}>
               画像生成
             </button>
-            <button className="form-button" onClick={participate}>
+            <button className="form-button3" onClick={participate}>
               約束する！
             </button>
             <ul className="schedule-list" id="schedule">
