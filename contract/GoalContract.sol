@@ -16,11 +16,7 @@ interface IERC20 {
 contract GoalContract {
     address payable public goalOwner;
     uint256 public goalAmount;
-    uint256 public participantsCount;
-    uint256 public verifiersCount;
-    mapping(address => bool) public participants;
-    mapping(address => bool) public verifiers;
-    mapping(address => bool) public hasVerified;
+    mapping(address => Participant) public participants;
     IERC20 public goalToken;
 
     struct Participant {
@@ -28,39 +24,16 @@ contract GoalContract {
         bool participated;
     }
 
-    modifier onlyOwner() {
-        require(
-            msg.sender == goalOwner,
-            "Only goal owner can call this function."
-        );
-        _;
-    }
-
-    modifier onlyParticipants() {
-        require(
-            participants[msg.sender],
-            "Only participants can call this function."
-        );
-        _;
-    }
-
-    modifier onlyVerifiers() {
-        require(
-            verifiers[msg.sender],
-            "Only verifiers can call this function."
-        );
-        _;
-    }
-
     constructor(address _goalToken) {
         goalOwner = payable(msg.sender);
-        participants[goalOwner] = true;
         goalToken = IERC20(_goalToken);
     }
 
     function participate(uint256 amount) external {
         require(amount > 0, "Amount should be greater than 0");
 
+        goalToken.transferFrom(msg.sender, address(this), amount);
+        
         participants[msg.sender].amount = amount;
         participants[msg.sender].participated = true;
     }
