@@ -13,13 +13,13 @@ function WalletAddressForm() {
   };
 
   return (
-    <form>
+    <>
       <label>
         証人のWallet Address:
         <input type="text" value={walletAddress} onChange={handleChange} />
       </label>
       <button type="submit">Submit</button>
-    </form>
+    </>
   );
 }
 
@@ -28,7 +28,7 @@ function App() {
   const [randomIndex, setRandomIndex] = useState(-1);
   const { image, fetchImage } = useGenerateImage();
   const { schedule, fetchSchedule, setSchedule } = useGenerateschedule();
-  const { init, connectMetamask, success, participate } = useContract();
+  const { init, connectMetamask, success, participate, setIsParticipated, accounts } = useContract();
 
   useEffect(() => {
     init();
@@ -36,7 +36,7 @@ function App() {
 
   useEffect(() => {
     connectMetamask();
-  }, [success]);
+  }, []);
 
 
   const handlePromptChange = (event: any) => {
@@ -70,6 +70,15 @@ function App() {
     setSchedule(newSchedule)
   }, [image])
 
+  useEffect(() => {
+    if (accounts && accounts.length > 0) {
+      const intervalId = setInterval(setIsParticipated, 3000);
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [(window as any).ethereum])
+
 
   return (
     <div className="container">
@@ -94,11 +103,10 @@ function App() {
             <button className="form-button2" onClick={updateImage} style={{ marginRight: '2em' }}>
               画像生成
             </button>
-            <button className="form-button3" onClick={participate}>
-              約束する！
+            <button className="form-button3" onClick={participate} style={{ marginBottom: '1em' }}>
+              約束する！(10GOAL)
             </button>
             <WalletAddressForm />
-            <input type="text" />
             <ul className="schedule-list" id="schedule">
               {schedule.map((item) => {
                 return (

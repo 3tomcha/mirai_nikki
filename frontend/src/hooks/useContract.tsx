@@ -11,6 +11,7 @@ export default function useContract() {
   const [success, setSuccess] = useState<boolean>(false);
   const goalContractAddress = "0xE046BCd01A8A69811F6F459110d908121f8275a8"
   const goalTokenAddress = "0x94391Aa1286d68911Aa11512778bFB1cd4674Cf7"
+  const [isParticipated, _setIsParticipated] = useState<boolean>(false);
 
   const init = () => {
     if ((window as any).ethereum) {
@@ -23,14 +24,14 @@ export default function useContract() {
   }
 
   const connectMetamask = async () => {
-    const res = ethereum && await ethereum.request({ method: "eth_requestAccounts" });
+    const res = (window as any).ethereum && await (window as any).ethereum.request({ method: "eth_requestAccounts" });
     if (res) {
       setAccounts(res);
     }
   }
 
   const participate = async () => {
-    const provider = new ethers.BrowserProvider(ethereum);
+    const provider = new ethers.BrowserProvider((window as any).ethereum);
     console.log(provider);
     const signer = await provider.getSigner();
     const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, signer) as unknown as GoalContract;
@@ -42,6 +43,19 @@ export default function useContract() {
     await goalContract.participate(10).catch((err) => {
       console.log(err);
     });
+    alert(`約束しました。次は証人のウォレットアドレスを入力！`)
+  }
+
+  const setIsParticipated = async () => {
+    const provider = new ethers.BrowserProvider((window as any).ethereum);
+    const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, provider) as unknown as GoalContract;
+    const res = await goalContract.participant().catch((err) => {
+      console.log(err);
+    });
+    if (!res) {
+      return false;
+    }
+    _setIsParticipated(res === accounts[0]);
   }
 
   const addVerifier = async (address: string) => {
@@ -60,6 +74,9 @@ export default function useContract() {
     connectMetamask,
     success,
     participate,
-    addVerifier
+    addVerifier,
+    isParticipated,
+    setIsParticipated,
+    accounts
   }
 }
