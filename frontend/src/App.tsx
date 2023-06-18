@@ -61,28 +61,35 @@ function App() {
           type="text"
           className="form-input"
           id="prompt"
-          placeholder="未来の予定を入力してください"
+          placeholder="あなたのなりたい姿を具体的に書いてね"
           value={prompt}
           onChange={handlePromptChange}
           required
         />
-        <button className="form-button" onClick={participate}>
-          更新
+        <button className="form-button" onClick={updateSchedule}>
+          生成
         </button>
       </div>
-      <button className="form-button" onClick={updateImage}>
-        画像生成
-      </button>
-      {schedule && (
-        <ul className="schedule-list" id="schedule">
-          {schedule.map((item) => {
-            return (
-              <ScheduleItem {...item} key={item.time} />
-            )
-          })}
-        </ul>
-      )}
-    </div>
+      {
+        schedule.length > 0 && (
+          <>
+            <button className="form-button" onClick={updateImage} style={{ marginRight: '2em' }}>
+              画像生成
+            </button>
+            <button className="form-button" onClick={participate}>
+              約束する！
+            </button>
+            <ul className="schedule-list" id="schedule">
+              {schedule.map((item) => {
+                return (
+                  <ScheduleItem {...item} key={item.time} />
+                )
+              })}
+            </ul>
+          </>
+        )
+      }
+    </div >
   )
 }
 
