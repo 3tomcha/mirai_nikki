@@ -5,6 +5,24 @@ import { useGenerateschedule } from './hooks/useGenerateSchedule';
 import ScheduleItem from './components/ScheduleItem';
 import useContract from './hooks/useContract';
 
+function WalletAddressForm() {
+  const [walletAddress, setWalletAddress] = useState('');
+
+  const handleChange = (e) => {
+    setWalletAddress(e.target.value);
+  };
+
+  return (
+    <form>
+      <label>
+        証人のWallet Address:
+        <input type="text" value={walletAddress} onChange={handleChange} />
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
 function App() {
   const [prompt, setPrompt] = useState('');
   const [randomIndex, setRandomIndex] = useState(-1);
@@ -79,9 +97,8 @@ function App() {
             <button className="form-button3" onClick={participate}>
               約束する！
             </button>
-            <button className="form-button3" onClick={participate}>
-              証人を決める
-            </button>
+            <WalletAddressForm />
+            <input type="text" />
             <ul className="schedule-list" id="schedule">
               {schedule.map((item) => {
                 return (
