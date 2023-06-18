@@ -1,12 +1,22 @@
 import { useState } from "react";
+import { atom, useRecoilState } from 'recoil'
+import { recoilPersist } from 'recoil-persist'
+
+const { persistAtom } = recoilPersist()
 
 export type Schedule = {
   time: string;
   value: string;
   image: string;
 }
+const scheduleState = atom({
+  key: 'schedule',
+  default: null,
+  effects_UNSTABLE: [persistAtom],
+})
+
 export function useGenerateschedule() {
-  const [schedule, setSchedule] = useState<Schedule[]>([]);
+  const [schedule, setSchedule] = useRecoilState<Schedule[]>(scheduleState);
   const API_URL = process.env.REACT_APP_API_URL;
 
   const fetchSchedule = async (_prompt: string) => {

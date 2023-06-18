@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import { useGenerateImage } from './hooks/useGenerateImage';
-import { useGenerateschedule } from './hooks/useGenerateSchedule';
+import { Schedule, useGenerateschedule } from './hooks/useGenerateSchedule';
 import ScheduleItem from './components/ScheduleItem';
 import useContract from './hooks/useContract';
 
@@ -60,14 +60,17 @@ function App() {
   useEffect(() => {
     console.log(image)
     console.log(randomIndex)
-    const newSchedule = schedule.map((item, index) => {
-      if (index - 1 === randomIndex) {
-        item.image = image
-      }
-      return item
-    })
-    console.log(newSchedule)
-    setSchedule(newSchedule)
+    if (schedule && schedule.length > 0 && randomIndex !== -1) {
+      const cp = { ...schedule } as Schedule[]
+      const newSchedule = cp.map((item, index) => {
+        if (index - 1 === randomIndex) {
+          item.image = image
+        }
+        return item
+      })
+      console.log(newSchedule)
+      setSchedule(newSchedule)
+    }
   }, [image])
 
   useEffect(() => {
@@ -77,7 +80,7 @@ function App() {
         clearInterval(intervalId);
       };
     }
-  }, [(window as any).ethereum])
+  }, [accounts])
 
 
   return (
@@ -98,7 +101,7 @@ function App() {
         </button>
       </div>
       {
-        schedule.length > 0 && (
+        schedule && schedule.length > 0 && (
           <>
             <button className="form-button2" onClick={updateImage} style={{ marginRight: '2em' }}>
               画像生成
@@ -117,7 +120,7 @@ function App() {
           </>
         )
       }
-    </div >
+    </div>
   )
 }
 
