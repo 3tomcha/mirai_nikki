@@ -18,6 +18,8 @@ contract GoalContract {
     uint256 public goalAmount;
     mapping(address => Participant) public participants;
     IERC20 public goalToken;
+    mapping(address => bool) public verifiers;
+    uint256 public verifiersCount;
 
     struct Participant {
         uint256 amount;
@@ -33,8 +35,14 @@ contract GoalContract {
         require(amount > 0, "Amount should be greater than 0");
 
         goalToken.transferFrom(msg.sender, address(this), amount);
-        
+
         participants[msg.sender].amount = amount;
         participants[msg.sender].participated = true;
+    }
+
+    function addVerifier(address _verifier) external {
+        require(!participants[_verifier].participated, "Verifier cannot be a participant.");
+        verifiers[_verifier] = true;
+        verifiersCount++;
     }
 }
