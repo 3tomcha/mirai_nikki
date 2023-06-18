@@ -3,12 +3,23 @@ import React, { useEffect, useState } from 'react';
 import { useGenerateImage } from './hooks/useGenerateImage';
 import { useGenerateschedule } from './hooks/useGenerateSchedule';
 import ScheduleItem from './components/ScheduleItem';
+import useContract from './hooks/useContract';
 
 function App() {
   const [prompt, setPrompt] = useState('');
   const [randomIndex, setRandomIndex] = useState(-1);
   const { image, fetchImage } = useGenerateImage();
   const { schedule, fetchSchedule, setSchedule } = useGenerateschedule();
+  const { init, connectMetamask, success } = useContract();
+
+  useEffect(() => {
+    init();
+  }, []);
+
+  useEffect(() => {
+    connectMetamask();
+  }, [success]);
+
 
   const handlePromptChange = (event: any) => {
     setPrompt(event.target.value);
