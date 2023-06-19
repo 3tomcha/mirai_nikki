@@ -107,10 +107,10 @@ function App() {
               画像生成
             </button>
             {isParticipated ? (
-              <button className="form-button3" onClick={participate} style={{ marginBottom: '1em' }}>
-                約束する！(10GOAL)
-              </button>
-            ) : <p>約束ずみです</p>}
+              <p>約束ずみです</p>
+            ) : <button className="form-button3" onClick={participate} style={{ marginBottom: '1em' }}>
+              約束する！(10GOAL)
+            </button>}
             < WalletAddressForm />
             <ul className="schedule-list" id="schedule">
               {schedule.map((item) => {
