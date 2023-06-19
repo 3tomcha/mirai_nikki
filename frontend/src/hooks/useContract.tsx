@@ -11,8 +11,9 @@ export default function useContract() {
   const [success, setSuccess] = useState<boolean>(false);
   const goalTokenAddress = "0xF00125Fa190be6f186e50aA44bC35bb8F508Dd6e"
   const goalContractAddress = "0x27b3Be34a3Fd6d0401CE6bc08E8ffDBec36920dE"
-  const [isParticipated, _setIsParticipated] = useState<boolean>(false);
+  const [isParticipated, _setIsParticipated] = useState<boolean>();
   const [verifier, _setVerifier] = useState<string>();
+  const [hasVerified, _setHasVerified] = useState<boolean>(false);
 
   const init = () => {
     if ((window as any).ethereum) {
@@ -53,6 +54,9 @@ export default function useContract() {
   }
 
   const setIsParticipated = async () => {
+    if (!accounts) {
+      return;
+    }
     const provider = new ethers.BrowserProvider((window as any).ethereum);
     const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, provider) as unknown as GoalContract;
     const res = await goalContract.participant().catch((err) => {
@@ -65,7 +69,9 @@ export default function useContract() {
     console.log(accounts[0]);
     console.log(res.toLowerCase() === accounts[0].toLowerCase());
 
-    _setIsParticipated(res.toLowerCase() === accounts[0].toLowerCase());
+    if (res.toLowerCase() === accounts[0].toLowerCase()) {
+      _setIsParticipated(true);
+    }
   }
 
   const addVerifier = async (address: string) => {
@@ -79,16 +85,30 @@ export default function useContract() {
     alert(`証人は${address}です。達成したら証人に報告してね。`)
   }
 
-  const setVerifier = async (address: string) => {
+  const fetchVerifier = async () => {
     const provider = new ethers.BrowserProvider(ethereum);
     const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, provider) as unknown as GoalContract;
     const res = await goalContract.verifier().catch((err) => {
       console.log(err);
     });
+    console.log(res);
     if (res) {
       _setVerifier(res);
     }
   }
+
+  const fetchHasVerified = async (address: string) => {
+    const provider = new ethers.BrowserProvider(ethereum);
+    const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, provider) as unknown as GoalContract;
+    const res = await goalContract.hasVerified(address).catch((err) => {
+      console.log(err);
+    });
+    if (res) {
+      _setHasVerified(res);
+    }
+  }
+
+
 
   return {
     init,
@@ -100,6 +120,8 @@ export default function useContract() {
     setIsParticipated,
     accounts,
     verifier,
-    setVerifier
+    fetchVerifier,
+    fetchHasVerified,
+    hasVerified
   }
 }

@@ -34,7 +34,7 @@ function App() {
   const [randomIndex, setRandomIndex] = useState(-1);
   const { image, fetchImage } = useGenerateImage();
   const { schedule, fetchSchedule, setSchedule } = useGenerateschedule();
-  const { init, connectMetamask, success, participate, setIsParticipated, accounts, isParticipated, addVerifier, verifier, setVerifier } = useContract();
+  const { init, connectMetamask, success, participate, setIsParticipated, accounts, isParticipated, addVerifier, verifier, fetchVerifier, hasVerified, fetchHasVerified } = useContract();
 
   useEffect(() => {
     init();
@@ -80,24 +80,26 @@ function App() {
   }, [image])
 
   useEffect(() => {
-    if (accounts && accounts.length > 0) {
-      const intervalId = setInterval(setIsParticipated, 3000);
-      return () => {
-        if (isParticipated) {
-          clearInterval(intervalId);
-        }
-      };
+    let intervalId;
+    if (accounts && accounts.length > 0 && !isParticipated) {
+      intervalId = setInterval(() => {
+        setIsParticipated();
+      }, 1000);
     }
-  }, [accounts])
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [accounts, isParticipated]);
 
   useEffect(() => {
-    const intervalId = setInterval(setVerifier, 3000);
+    let intervalId;
+    if (!verifier) {
+      intervalId = setInterval(fetchVerifier, 5000);
+    }
     return () => {
-      if (verifier) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [verifier])
+      clearInterval(intervalId);
+    }
+  }, [accounts, verifier])
 
 
   return (
