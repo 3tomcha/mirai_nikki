@@ -28,7 +28,7 @@ function App() {
   const [randomIndex, setRandomIndex] = useState(-1);
   const { image, fetchImage } = useGenerateImage();
   const { schedule, fetchSchedule, setSchedule } = useGenerateschedule();
-  const { init, connectMetamask, success, participate, setIsParticipated, accounts } = useContract();
+  const { init, connectMetamask, success, participate, setIsParticipated, accounts, isParticipated } = useContract();
 
   useEffect(() => {
     init();
@@ -106,10 +106,12 @@ function App() {
             <button className="form-button2" onClick={updateImage} style={{ marginRight: '2em' }}>
               画像生成
             </button>
-            <button className="form-button3" onClick={participate} style={{ marginBottom: '1em' }}>
-              約束する！(10GOAL)
-            </button>
-            <WalletAddressForm />
+            {isParticipated ? (
+              <button className="form-button3" onClick={participate} style={{ marginBottom: '1em' }}>
+                約束する！(10GOAL)
+              </button>
+            ) : <p>約束ずみです</p>}
+            < WalletAddressForm />
             <ul className="schedule-list" id="schedule">
               {schedule.map((item) => {
                 return (
