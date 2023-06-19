@@ -31,19 +31,24 @@ export default function useContract() {
   }
 
   const participate = async () => {
-    const provider = new ethers.BrowserProvider((window as any).ethereum);
-    console.log(provider);
-    const signer = await provider.getSigner();
-    const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, signer) as unknown as GoalContract;
-    const goalToken = new ethers.Contract(goalTokenAddress, GoalTokenAbi, signer) as unknown as GoalToken;
-    // approveする
-    await goalToken.approve(goalContractAddress, 10).catch((err) => {
-      console.log(err);
-    });
-    await goalContract.participate(10).catch((err) => {
-      console.log(err);
-    });
-    alert(`約束しました。次は証人のウォレットアドレスを入力！`)
+    try {
+      const provider = new ethers.BrowserProvider((window as any).ethereum);
+      console.log(provider);
+      const signer = await provider.getSigner();
+      const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, signer) as unknown as GoalContract;
+      const goalToken = new ethers.Contract(goalTokenAddress, GoalTokenAbi, signer) as unknown as GoalToken;
+      // approveする
+      await goalToken.approve(goalContractAddress, 10).catch((err) => {
+        console.log(err);
+      });
+      await goalContract.participate(10).catch((err) => {
+        console.log(err);
+      });
+      alert(`約束しました。次は証人のウォレットアドレスを入力！`)
+    } catch (error) {
+      console.error('Participation error:', error);
+    }
+
   }
 
   const setIsParticipated = async () => {
@@ -55,7 +60,11 @@ export default function useContract() {
     if (!res) {
       return false;
     }
-    _setIsParticipated(res === accounts[0]);
+    console.log(res);
+    console.log(accounts[0]);
+    console.log(res.toLowerCase() === accounts[0].toLowerCase());
+
+    _setIsParticipated(res.toLowerCase() === accounts[0].toLowerCase());
   }
 
   const addVerifier = async (address: string) => {
