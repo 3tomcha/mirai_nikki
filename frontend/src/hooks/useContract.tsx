@@ -12,6 +12,7 @@ export default function useContract() {
   const goalTokenAddress = "0xF00125Fa190be6f186e50aA44bC35bb8F508Dd6e"
   const goalContractAddress = "0x27b3Be34a3Fd6d0401CE6bc08E8ffDBec36920dE"
   const [isParticipated, _setIsParticipated] = useState<boolean>(false);
+  const [verifier, _setVerifier] = useState<string>();
 
   const init = () => {
     if ((window as any).ethereum) {
@@ -78,6 +79,17 @@ export default function useContract() {
     alert(`証人は${address}です。達成したら証人に報告してね。`)
   }
 
+  const setVerifier = async (address: string) => {
+    const provider = new ethers.BrowserProvider(ethereum);
+    const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, provider) as unknown as GoalContract;
+    const res = await goalContract.verifier().catch((err) => {
+      console.log(err);
+    });
+    if (res) {
+      _setVerifier(res);
+    }
+  }
+
   return {
     init,
     connectMetamask,
@@ -86,6 +98,8 @@ export default function useContract() {
     addVerifier,
     isParticipated,
     setIsParticipated,
-    accounts
+    accounts,
+    verifier,
+    setVerifier
   }
 }

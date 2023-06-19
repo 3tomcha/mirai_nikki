@@ -34,7 +34,7 @@ function App() {
   const [randomIndex, setRandomIndex] = useState(-1);
   const { image, fetchImage } = useGenerateImage();
   const { schedule, fetchSchedule, setSchedule } = useGenerateschedule();
-  const { init, connectMetamask, success, participate, setIsParticipated, accounts, isParticipated, addVerifier } = useContract();
+  const { init, connectMetamask, success, participate, setIsParticipated, accounts, isParticipated, addVerifier, verifier, setVerifier } = useContract();
 
   useEffect(() => {
     init();
@@ -83,10 +83,21 @@ function App() {
     if (accounts && accounts.length > 0) {
       const intervalId = setInterval(setIsParticipated, 3000);
       return () => {
-        clearInterval(intervalId);
+        if (isParticipated) {
+          clearInterval(intervalId);
+        }
       };
     }
   }, [accounts])
+
+  useEffect(() => {
+    const intervalId = setInterval(setVerifier, 3000);
+    return () => {
+      if (verifier) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [verifier])
 
 
   return (
@@ -117,7 +128,11 @@ function App() {
             ) : <button className="form-button3" onClick={participate} style={{ marginBottom: '1em' }}>
               約束する！(10GOAL)
             </button>}
-            < WalletAddressForm handleSubmit={addVerifier} />
+            {verifier ? (
+              <p>証人は{verifier}です</p>
+            ) : < WalletAddressForm handleSubmit={addVerifier} />
+            }
+
             <ul className="schedule-list" id="schedule">
               {schedule.map((item) => {
                 return (
