@@ -101,6 +101,16 @@ function App() {
     }
   }, [accounts, verifier])
 
+  useEffect(() => {
+    let intervalId;
+    if (!hasVerified) {
+      intervalId = setInterval(fetchHasVerified, 5000);
+    }
+    return () => {
+      clearInterval(intervalId);
+    }
+  }, [accounts, hasVerified])
+
 
   return (
     <div className="container">
@@ -134,7 +144,10 @@ function App() {
               <p>証人は{verifier}です</p>
             ) : < WalletAddressForm handleSubmit={addVerifier} />
             }
-
+            {hasVerified && verifier ? (
+              <p>証人によって認められました。</p>
+            ) : <p>まだ認められていません</p>
+            }
             <ul className="schedule-list" id="schedule">
               {schedule.map((item) => {
                 return (
