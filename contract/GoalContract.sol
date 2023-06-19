@@ -60,20 +60,20 @@ contract GoalContract {
         require(goalToken.balanceOf(address(this)) >= goalAmount, "Goal has not been achieved.");
         require(!hasVerified[participant], "The goal has already been verified.");
         hasVerified[participant] = true;
+        canWithdraw = true;
     }
 
     function setWithdrawPermission(bool _canWithdraw) external onlyOwner {
         canWithdraw = _canWithdraw;
     }
     
-    function updateParticipants(address _newParticipant, address _newVerifier) external onlyOwner {
-        participant = _newParticipant;
-        verifier = _newVerifier;
+    function reset() public {
+        participant = address(0);
+        verifier =address(0);
     }
 
      function withdrawTokens() external onlyParticipant {
         require(canWithdraw, "Cannot withdraw tokens at the moment.");
-        uint256 tokenBalance = goalToken.balanceOf(address(this));
-        goalToken.transfer(participant, tokenBalance);
+        goalToken.transfer(participant, goalAmount);
     }
 }

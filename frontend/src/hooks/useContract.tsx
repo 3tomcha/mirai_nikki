@@ -10,7 +10,7 @@ export default function useContract() {
   const [accounts, setAccounts] = useState<any>();
   const [success, setSuccess] = useState<boolean>(false);
   const goalTokenAddress = "0xF00125Fa190be6f186e50aA44bC35bb8F508Dd6e"
-  const goalContractAddress = "0x27b3Be34a3Fd6d0401CE6bc08E8ffDBec36920dE"
+  const goalContractAddress = "0xECb1b04200A789A5A90F5292eed35A26D644B48B"
   const [isParticipated, _setIsParticipated] = useState<boolean>();
   const [verifier, _setVerifier] = useState<string>();
   const [hasVerified, _setHasVerified] = useState<boolean>(false);
@@ -69,7 +69,7 @@ export default function useContract() {
     console.log(accounts[0]);
     console.log(res.toLowerCase() === accounts[0].toLowerCase());
 
-    if (res.toLowerCase() === accounts[0].toLowerCase()) {
+    if (res.toLowerCase() != "0x0000000000000000000000000000000000000000" && res.toLowerCase() === accounts[0].toLowerCase()) {
       _setIsParticipated(true);
     }
   }

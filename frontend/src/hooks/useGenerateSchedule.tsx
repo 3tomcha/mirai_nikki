@@ -11,7 +11,7 @@ export type Schedule = {
 }
 const scheduleState = atom({
   key: 'schedule',
-  default: null,
+  default: [],
   effects_UNSTABLE: [persistAtom],
 })
 
