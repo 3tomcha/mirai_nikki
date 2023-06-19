@@ -9,8 +9,8 @@ export default function useContract() {
   const [ethereum, setEthereum] = useState<any>();
   const [accounts, setAccounts] = useState<any>();
   const [success, setSuccess] = useState<boolean>(false);
-  const goalTokenAddress = "0x632cbc43423dE14393B453EE75b666B6F10F3F33"
-  const goalContractAddress = "0xd238FcEF8d58EC0DFe411ba48034eCd908fd3cCa"
+  const goalTokenAddress = "0xF00125Fa190be6f186e50aA44bC35bb8F508Dd6e"
+  const goalContractAddress = "0x27b3Be34a3Fd6d0401CE6bc08E8ffDBec36920dE"
   const [isParticipated, _setIsParticipated] = useState<boolean>(false);
 
   const init = () => {
