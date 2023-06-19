@@ -35,7 +35,7 @@ function App() {
   const [randomIndex, setRandomIndex] = useState(-1);
   const { image, fetchImage } = useGenerateImage();
   const { schedule, fetchSchedule, setSchedule } = useGenerateschedule();
-  const { init, connectMetamask, success, participate, setIsParticipated, accounts, isParticipated, addVerifier, verifier, fetchVerifier, hasVerified, fetchHasVerified } = useContract();
+  const { init, connectMetamask, success, participate, setIsParticipated, accounts, isParticipated, addVerifier, verifier, fetchVerifier, hasVerified, fetchHasVerified, resetContract } = useContract();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -65,6 +65,19 @@ function App() {
     const randomItem = itemsWithoutImage[_randomIndex];
     console.log(randomItem)
     await fetchImage(randomItem.value)
+  }
+
+  const reset = async () => {
+    setLoading(true);
+    await resetContract();
+    localStorage.clear();
+    setLoading(false);
+  }
+
+  const handleParticipate = async () => {
+    setLoading(true);
+    await participate();
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -137,7 +150,7 @@ function App() {
       {
         schedule && schedule.length > 0 && (
           <>
-            <button className="form-button" onClick={updateImage} style={{ marginRight: '2em' }}>
+            <button className="form-button" onClick={reset} style={{ marginRight: '2em' }}>
               リセット
             </button>
             <button className="form-button2" onClick={updateImage} style={{ marginRight: '2em' }}>
@@ -145,7 +158,7 @@ function App() {
             </button>
             {isParticipated ? (
               <p>約束ずみです</p>
-            ) : <button className="form-button3" onClick={participate} style={{ marginBottom: '1em' }}>
+            ) : <button className="form-button3" onClick={handleParticipate} style={{ marginBottom: '1em' }}>
               約束する！(10GOAL)
             </button>}
             {verifier && verifier !== "0x0000000000000000000000000000000000000000" ? (

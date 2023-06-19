@@ -108,6 +108,20 @@ export default function useContract() {
     }
   }
 
+  const resetContract = async () => {
+    const provider = new ethers.BrowserProvider(ethereum);
+    console.log(provider);
+    const signer = await provider.getSigner();
+    const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, signer) as unknown as GoalContract;
+    const res = await goalContract.reset().catch((err) => {
+      console.log(err);
+    });
+    if (res) {
+      alert("コントラクトをリセットしました")
+    }
+
+  }
+
 
 
   return {
@@ -122,6 +136,7 @@ export default function useContract() {
     verifier,
     fetchVerifier,
     fetchHasVerified,
-    hasVerified
+    hasVerified,
+    resetContract
   }
 }

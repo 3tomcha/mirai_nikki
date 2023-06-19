@@ -33,8 +33,8 @@ export interface GoalContractInterface extends Interface {
       | "markGoalAchieved"
       | "participant"
       | "participate"
+      | "reset"
       | "setWithdrawPermission"
-      | "updateParticipants"
       | "verifier"
       | "withdrawTokens"
   ): FunctionFragment;
@@ -69,13 +69,10 @@ export interface GoalContractInterface extends Interface {
     functionFragment: "participate",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "reset", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "setWithdrawPermission",
     values: [boolean]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateParticipants",
-    values: [AddressLike, AddressLike]
   ): string;
   encodeFunctionData(functionFragment: "verifier", values?: undefined): string;
   encodeFunctionData(
@@ -110,12 +107,9 @@ export interface GoalContractInterface extends Interface {
     functionFragment: "participate",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "reset", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setWithdrawPermission",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateParticipants",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "verifier", data: BytesLike): Result;
@@ -194,14 +188,10 @@ export interface GoalContract extends BaseContract {
     "nonpayable"
   >;
 
+  reset: TypedContractMethod<[], [void], "nonpayable">;
+
   setWithdrawPermission: TypedContractMethod<
     [_canWithdraw: boolean],
-    [void],
-    "nonpayable"
-  >;
-
-  updateParticipants: TypedContractMethod<
-    [_newParticipant: AddressLike, _newVerifier: AddressLike],
     [void],
     "nonpayable"
   >;
@@ -242,15 +232,11 @@ export interface GoalContract extends BaseContract {
     nameOrSignature: "participate"
   ): TypedContractMethod<[amount: BigNumberish], [void], "nonpayable">;
   getFunction(
+    nameOrSignature: "reset"
+  ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
     nameOrSignature: "setWithdrawPermission"
   ): TypedContractMethod<[_canWithdraw: boolean], [void], "nonpayable">;
-  getFunction(
-    nameOrSignature: "updateParticipants"
-  ): TypedContractMethod<
-    [_newParticipant: AddressLike, _newVerifier: AddressLike],
-    [void],
-    "nonpayable"
-  >;
   getFunction(
     nameOrSignature: "verifier"
   ): TypedContractMethod<[], [string], "view">;

@@ -135,6 +135,13 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "reset",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "bool",
@@ -143,24 +150,6 @@ const _abi = [
       },
     ],
     name: "setWithdrawPermission",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_newParticipant",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_newVerifier",
-        type: "address",
-      },
-    ],
-    name: "updateParticipants",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
