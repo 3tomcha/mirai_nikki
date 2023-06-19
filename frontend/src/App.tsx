@@ -4,6 +4,7 @@ import { useGenerateImage } from './hooks/useGenerateImage';
 import { Schedule, useGenerateschedule } from './hooks/useGenerateSchedule';
 import ScheduleItem from './components/ScheduleItem';
 import useContract from './hooks/useContract';
+import Loader from './components/Loader';
 
 type WalletAddressFormProps = {
   handleSubmit: (walletAddress: string) => void;
@@ -35,6 +36,7 @@ function App() {
   const { image, fetchImage } = useGenerateImage();
   const { schedule, fetchSchedule, setSchedule } = useGenerateschedule();
   const { init, connectMetamask, success, participate, setIsParticipated, accounts, isParticipated, addVerifier, verifier, fetchVerifier, hasVerified, fetchHasVerified } = useContract();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     init();
@@ -49,8 +51,10 @@ function App() {
     setPrompt(event.target.value);
   };
 
-  const updateSchedule = () => {
-    fetchSchedule(prompt);
+  const updateSchedule = async () => {
+    setLoading(true);
+    await fetchSchedule(prompt);
+    setLoading(false);
   };
 
   const updateImage = async () => {
@@ -114,6 +118,7 @@ function App() {
 
   return (
     <div className="container">
+      {loading && <Loader text="Loading..." />}
       <h1>未来日記</h1>
       <div className="form-container">
         <input
@@ -132,6 +137,9 @@ function App() {
       {
         schedule && schedule.length > 0 && (
           <>
+            <button className="form-button" onClick={updateImage} style={{ marginRight: '2em' }}>
+              リセット
+            </button>
             <button className="form-button2" onClick={updateImage} style={{ marginRight: '2em' }}>
               画像生成
             </button>
@@ -140,11 +148,11 @@ function App() {
             ) : <button className="form-button3" onClick={participate} style={{ marginBottom: '1em' }}>
               約束する！(10GOAL)
             </button>}
-            {verifier ? (
-              <p>証人は{verifier}です</p>
-            ) : < WalletAddressForm handleSubmit={addVerifier} />
+            {verifier && verifier !== "0x0000000000000000000000000000000000000000" ? (
+              <><br /><p>証人は{verifier}です</p></>
+            ) : <><br />< WalletAddressForm handleSubmit={addVerifier} /></>
             }
-            {hasVerified && verifier ? (
+            {hasVerified && verifier && verifier !== "0x0000000000000000000000000000000000000000" ? (
               <p>証人によって認められました。</p>
             ) : <p>まだ認められていません</p>
             }
