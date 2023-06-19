@@ -5,12 +5,18 @@ import { Schedule, useGenerateschedule } from './hooks/useGenerateSchedule';
 import ScheduleItem from './components/ScheduleItem';
 import useContract from './hooks/useContract';
 
-function WalletAddressForm() {
+type WalletAddressFormProps = {
+  handleSubmit: (walletAddress: string) => void;
+}
+function WalletAddressForm({ handleSubmit }: WalletAddressFormProps) {
   const [walletAddress, setWalletAddress] = useState('');
 
   const handleChange = (e) => {
     setWalletAddress(e.target.value);
   };
+  const _handleSubmit = () => {
+    handleSubmit(walletAddress);
+  }
 
   return (
     <>
@@ -18,7 +24,7 @@ function WalletAddressForm() {
         証人のWallet Address:
         <input type="text" value={walletAddress} onChange={handleChange} />
       </label>
-      <button type="submit">Submit</button>
+      <button onClick={_handleSubmit}>Submit</button>
     </>
   );
 }
@@ -28,7 +34,7 @@ function App() {
   const [randomIndex, setRandomIndex] = useState(-1);
   const { image, fetchImage } = useGenerateImage();
   const { schedule, fetchSchedule, setSchedule } = useGenerateschedule();
-  const { init, connectMetamask, success, participate, setIsParticipated, accounts, isParticipated } = useContract();
+  const { init, connectMetamask, success, participate, setIsParticipated, accounts, isParticipated, addVerifier } = useContract();
 
   useEffect(() => {
     init();
@@ -111,7 +117,7 @@ function App() {
             ) : <button className="form-button3" onClick={participate} style={{ marginBottom: '1em' }}>
               約束する！(10GOAL)
             </button>}
-            < WalletAddressForm />
+            < WalletAddressForm handleSubmit={addVerifier} />
             <ul className="schedule-list" id="schedule">
               {schedule.map((item) => {
                 return (
