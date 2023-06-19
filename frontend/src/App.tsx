@@ -35,7 +35,7 @@ function App() {
   const [randomIndex, setRandomIndex] = useState(-1);
   const { image, fetchImage } = useGenerateImage();
   const { schedule, fetchSchedule, setSchedule } = useGenerateschedule();
-  const { init, connectMetamask, success, participate, setIsParticipated, accounts, isParticipated, addVerifier, verifier, fetchVerifier, hasVerified, fetchHasVerified, resetContract } = useContract();
+  const { init, connectMetamask, success, participate, setIsParticipated, accounts, isParticipated, addVerifier, verifier, fetchVerifier, hasVerified, fetchHasVerified, resetContract, withdraw } = useContract();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -77,6 +77,12 @@ function App() {
   const handleParticipate = async () => {
     setLoading(true);
     await participate();
+    setLoading(false);
+  }
+
+  const handleWithdraw = async () => {
+    setLoading(true);
+    await withdraw();
     setLoading(false);
   }
 
@@ -166,7 +172,9 @@ function App() {
             ) : <><br />< WalletAddressForm handleSubmit={addVerifier} /></>
             }
             {hasVerified && verifier && verifier !== "0x0000000000000000000000000000000000000000" ? (
-              <p>証人によって認められました。</p>
+              <><p>証人によって認められました。</p><br /><button className="form-button" onClick={handleWithdraw}>
+                引き出す
+              </button></>
             ) : <p>まだ認められていません</p>
             }
             <ul className="schedule-list" id="schedule">

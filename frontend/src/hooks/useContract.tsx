@@ -10,7 +10,7 @@ export default function useContract() {
   const [accounts, setAccounts] = useState<any>();
   const [success, setSuccess] = useState<boolean>(false);
   const goalTokenAddress = "0xF00125Fa190be6f186e50aA44bC35bb8F508Dd6e"
-  const goalContractAddress = "0xECb1b04200A789A5A90F5292eed35A26D644B48B"
+  const goalContractAddress = "0x8a5EdfF6358E2F8F9a635a70ffa0746f3C60d785"
   const [isParticipated, _setIsParticipated] = useState<boolean>();
   const [verifier, _setVerifier] = useState<string>();
   const [hasVerified, _setHasVerified] = useState<boolean>(false);
@@ -50,7 +50,6 @@ export default function useContract() {
     } catch (error) {
       console.error('Participation error:', error);
     }
-
   }
 
   const setIsParticipated = async () => {
@@ -119,7 +118,19 @@ export default function useContract() {
     if (res) {
       alert("コントラクトをリセットしました")
     }
+  }
 
+  const withdraw = async () => {
+    const provider = new ethers.BrowserProvider(ethereum);
+    console.log(provider);
+    const signer = await provider.getSigner();
+    const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, signer) as unknown as GoalContract;
+    const res = await goalContract.withdrawTokens().catch((err) => {
+      console.log(err);
+    });
+    if (res) {
+      alert("トークンを引き出しました！")
+    }
   }
 
 
@@ -137,6 +148,7 @@ export default function useContract() {
     fetchVerifier,
     fetchHasVerified,
     hasVerified,
-    resetContract
+    resetContract,
+    withdraw
   }
 }
