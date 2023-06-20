@@ -34,7 +34,6 @@ export interface GoalContractInterface extends Interface {
       | "participant"
       | "participate"
       | "reset"
-      | "setWithdrawPermission"
       | "verifier"
       | "withdrawTokens"
   ): FunctionFragment;
@@ -70,10 +69,6 @@ export interface GoalContractInterface extends Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "reset", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "setWithdrawPermission",
-    values: [boolean]
-  ): string;
   encodeFunctionData(functionFragment: "verifier", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "withdrawTokens",
@@ -108,10 +103,6 @@ export interface GoalContractInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "reset", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setWithdrawPermission",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "verifier", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "withdrawTokens",
@@ -190,12 +181,6 @@ export interface GoalContract extends BaseContract {
 
   reset: TypedContractMethod<[], [void], "nonpayable">;
 
-  setWithdrawPermission: TypedContractMethod<
-    [_canWithdraw: boolean],
-    [void],
-    "nonpayable"
-  >;
-
   verifier: TypedContractMethod<[], [string], "view">;
 
   withdrawTokens: TypedContractMethod<[], [void], "nonpayable">;
@@ -234,9 +219,6 @@ export interface GoalContract extends BaseContract {
   getFunction(
     nameOrSignature: "reset"
   ): TypedContractMethod<[], [void], "nonpayable">;
-  getFunction(
-    nameOrSignature: "setWithdrawPermission"
-  ): TypedContractMethod<[_canWithdraw: boolean], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "verifier"
   ): TypedContractMethod<[], [string], "view">;

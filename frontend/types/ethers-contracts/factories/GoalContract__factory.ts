@@ -142,19 +142,6 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "bool",
-        name: "_canWithdraw",
-        type: "bool",
-      },
-    ],
-    name: "setWithdrawPermission",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "verifier",
     outputs: [

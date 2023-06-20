@@ -31,10 +31,7 @@ function WalletAddressForm({ handleSubmit }: WalletAddressFormProps) {
   );
 }
 
-type FullScreenConfettiProps = {
-  isCelebrating: boolean;
-}
-const FullScreenConfetti = ({ isCelebrating }: FullScreenConfettiProps) => {
+const FullScreenConfetti = () => {
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
@@ -53,7 +50,7 @@ const FullScreenConfetti = ({ isCelebrating }: FullScreenConfettiProps) => {
 
   return (
     <div>
-      {isCelebrating && <Confetti width={windowSize.width} height={windowSize.height} />}
+      <Confetti width={windowSize.width} height={windowSize.height} />
     </div>
   );
 };
@@ -168,12 +165,12 @@ function App() {
     if (hasVerified) {
       setIsCelebrating(true);
     }
-  })
+  }, [hasVerified])
 
 
   return (
     <div className="container">
-      <FullScreenConfetti isCelebrating={isCelebrating} />
+      {isCelebrating && <FullScreenConfetti />}
       {loading && <Loader text="Loading..." />}
       <h1>未来日記</h1>
       <div className="form-container">

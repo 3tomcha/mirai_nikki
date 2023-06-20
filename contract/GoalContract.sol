@@ -57,23 +57,17 @@ contract GoalContract {
     }
     
     function markGoalAchieved() external onlyVerifier {
-        require(goalToken.balanceOf(address(this)) >= goalAmount, "Goal has not been achieved.");
-        require(!hasVerified[participant], "The goal has already been verified.");
         hasVerified[participant] = true;
-        canWithdraw = true;
-    }
-
-    function setWithdrawPermission(bool _canWithdraw) external onlyOwner {
-        canWithdraw = _canWithdraw;
     }
     
     function reset() public {
+        delete hasVerified[participant];
         participant = address(0);
         verifier =address(0);
     }
 
      function withdrawTokens() external onlyParticipant {
-        require(canWithdraw, "Cannot withdraw tokens at the moment.");
+        require(hasVerified[participant], "Cannot withdraw tokens at the moment.");
         goalToken.transfer(participant, goalAmount);
     }
 }
