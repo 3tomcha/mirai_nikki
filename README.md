@@ -68,6 +68,7 @@ LINEなどで、このページのキャプチャと実際に行動した証拠�
 #### コントラクト
 ・Solidity<br>
 ・Astar shibuya network<br>
+<br>
 GoalToken<br>
 0x9CE4b49F94E9bbc43D72152B98cc6249087B292B<br>
 GoalContract<br>
