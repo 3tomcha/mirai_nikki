@@ -16,7 +16,7 @@ Shibuya testnetがMetamaskのネットワークに追加されていること
 GoalTokenを持っていること
 
 GoalToken(Astar shibuya)
-0xF00125Fa190be6f186e50aA44bC35bb8F508Dd6e
+0x9CE4b49F94E9bbc43D72152B98cc6249087B292B
 
 GoalContract(Astar shibuya)
-0x561971F28883B2E2e3435Bb3CCf42EB8d133e370
+0xa1F2C33a6fB877Ca5970834c99bb9243D6eEb6ec
