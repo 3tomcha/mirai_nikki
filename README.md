@@ -53,8 +53,18 @@ LINEなどで、このページのキャプチャと実際に行動した証拠�
 ユーザー
 
 # 技術詳細
-GoalToken(Astar shibuya)
-0x9CE4b49F94E9bbc43D72152B98cc6249087B292B
+フロントエンド
+・React.js
+・Typescript
 
-GoalContract(Astar shibuya)
+バックエンド
+・Flask
+・Python
+
+コントラクト
+・Solidity
+・Astar shibuya network
+GoalToken
+0x9CE4b49F94E9bbc43D72152B98cc6249087B292B
+GoalContract
 0xa1F2C33a6fB877Ca5970834c99bb9243D6eEb6ec
