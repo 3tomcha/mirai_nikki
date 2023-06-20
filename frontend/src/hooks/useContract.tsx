@@ -96,10 +96,10 @@ export default function useContract() {
     }
   }
 
-  const fetchHasVerified = async (address: string) => {
+  const fetchHasVerified = async () => {
     const provider = new ethers.BrowserProvider(ethereum);
     const goalContract = new ethers.Contract(goalContractAddress, GoalContractAbi, provider) as unknown as GoalContract;
-    const res = await goalContract.hasVerified(address).catch((err) => {
+    const res = await goalContract.hasVerified(accounts[0]).catch((err) => {
       console.log(err);
     });
     if (res) {

@@ -5,6 +5,7 @@ import { Schedule, useGenerateschedule } from './hooks/useGenerateSchedule';
 import ScheduleItem from './components/ScheduleItem';
 import useContract from './hooks/useContract';
 import Loader from './components/Loader';
+import Confetti from 'react-confetti';
 
 type WalletAddressFormProps = {
   handleSubmit: (walletAddress: string) => void;
@@ -30,6 +31,33 @@ function WalletAddressForm({ handleSubmit }: WalletAddressFormProps) {
   );
 }
 
+type FullScreenConfettiProps = {
+  isCelebrating: boolean;
+}
+const FullScreenConfetti = ({ isCelebrating }: FullScreenConfettiProps) => {
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return (
+    <div>
+      {isCelebrating && <Confetti width={windowSize.width} height={windowSize.height} />}
+    </div>
+  );
+};
+
 function App() {
   const [prompt, setPrompt] = useState('');
   const [randomIndex, setRandomIndex] = useState(-1);
@@ -37,6 +65,7 @@ function App() {
   const { schedule, fetchSchedule, setSchedule } = useGenerateschedule();
   const { init, connectMetamask, success, participate, setIsParticipated, accounts, isParticipated, addVerifier, verifier, fetchVerifier, hasVerified, fetchHasVerified, resetContract, withdraw } = useContract();
   const [loading, setLoading] = useState(false);
+  const [isCelebrating, setIsCelebrating] = useState(false);
 
   useEffect(() => {
     init();
@@ -135,8 +164,16 @@ function App() {
   }, [accounts, hasVerified])
 
 
+  useEffect(() => {
+    if (hasVerified) {
+      setIsCelebrating(true);
+    }
+  })
+
+
   return (
     <div className="container">
+      <FullScreenConfetti isCelebrating={isCelebrating} />
       {loading && <Loader text="Loading..." />}
       <h1>未来日記</h1>
       <div className="form-container">
@@ -171,6 +208,7 @@ function App() {
               <><br /><p>証人は{verifier}です</p></>
             ) : <><br />< WalletAddressForm handleSubmit={addVerifier} /></>
             }
+            {hasVerified}
             {hasVerified && verifier && verifier !== "0x0000000000000000000000000000000000000000" ? (
               <><p>証人によって認められました。</p><br /><button className="form-button" onClick={handleWithdraw}>
                 引き出す
