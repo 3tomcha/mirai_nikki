@@ -116,15 +116,15 @@ function App() {
     console.log(image)
     console.log(randomIndex)
     if (schedule && schedule.length > 0 && randomIndex !== -1 && image) {
-      const cp = { ...schedule } as Schedule[]
+      const cp = [...schedule];
       const newSchedule = cp.map((item, index) => {
         if (index - 1 === randomIndex) {
-          item.image = image
+          return { ...item, image: image };
         }
-        return item
-      })
-      console.log(newSchedule)
-      setSchedule(newSchedule)
+        return item;
+      });
+      console.log(newSchedule);
+      setSchedule(newSchedule);
     }
   }, [image])
 
