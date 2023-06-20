@@ -17,7 +17,8 @@ GoalTokenを持っていること<br>
 
 ## 使い方
 <img width="789" alt="スクリーンショット 2023-06-20 9 54 24" src="https://github.com/3tomcha/mirai_nikki/assets/15997287/8ce550be-765c-40cb-bbb7-77bd014193fe"><br>
-<img width="767" alt="スクリーンショット 2023-06-20 18 22 04" src="https://github.com/3tomcha/mirai_nikki/assets/15997287/0caee061-36ce-44ac-a72b-001464e5c7e9">
+<img width="767" alt="スクリーンショット 2023-06-20 18 22 04" src="https://github.com/3tomcha/mirai_nikki/assets/15997287/29c62c1f-4c92-4dbd-b865-c47201c5d244">
+
 
 
 ### ユーザー
