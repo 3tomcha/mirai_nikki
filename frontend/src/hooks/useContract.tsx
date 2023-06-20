@@ -10,7 +10,7 @@ export default function useContract() {
   const [accounts, setAccounts] = useState<any>();
   const [success, setSuccess] = useState<boolean>(false);
   const goalTokenAddress = "0xF00125Fa190be6f186e50aA44bC35bb8F508Dd6e"
-  const goalContractAddress = "0x8a5EdfF6358E2F8F9a635a70ffa0746f3C60d785"
+  const goalContractAddress = "0x561971F28883B2E2e3435Bb3CCf42EB8d133e370"
   const [isParticipated, _setIsParticipated] = useState<boolean>();
   const [verifier, _setVerifier] = useState<string>();
   const [hasVerified, _setHasVerified] = useState<boolean>(false);
