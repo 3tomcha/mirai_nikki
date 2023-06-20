@@ -14,6 +14,9 @@ SP: Metamaskブラウザ最新版<br>
 Metamaskがインストールされていること<br>
 Shibuya testnetがMetamaskのネットワークに追加されていること<br>
 GoalTokenを持っていること<br>
+動作確認をされる際は、下記FaucetからGOALTokenを取得ください<br>
+0xd0195A2D40718D1492D27Cf5E20c999cA7cB4a2C<br>
+https://github.com/3tomcha/mirai_nikki/contract/GoalFaucet.sol <br>
 
 ## 使い方
 <img width="789" alt="スクリーンショット 2023-06-20 9 54 24" src="https://github.com/3tomcha/mirai_nikki/assets/15997287/8ce550be-765c-40cb-bbb7-77bd014193fe"><br>
@@ -73,3 +76,5 @@ GoalToken<br>
 0x9CE4b49F94E9bbc43D72152B98cc6249087B292B<br>
 GoalContract<br>
 0xa1F2C33a6fB877Ca5970834c99bb9243D6eEb6ec
+GoalFaucet<br>
+0xd0195A2D40718D1492D27Cf5E20c999cA7cB4a2C
