@@ -89,7 +89,7 @@ function App() {
   useEffect(() => {
     console.log(image)
     console.log(randomIndex)
-    if (schedule && schedule.length > 0 && randomIndex !== -1) {
+    if (schedule && schedule.length > 0 && randomIndex !== -1 && image) {
       const cp = { ...schedule } as Schedule[]
       const newSchedule = cp.map((item, index) => {
         if (index - 1 === randomIndex) {
