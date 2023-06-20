@@ -46,7 +46,7 @@ export default function useContract() {
       await goalContract.participate(10).catch((err) => {
         console.log(err);
       });
-      alert(`約束しました。次は証人のウォレットアドレスを入力！`)
+      alert(`約束しました。次は見届け人のウォレットアドレスを入力！`)
     } catch (error) {
       console.error('Participation error:', error);
     }
@@ -81,7 +81,7 @@ export default function useContract() {
     await goalContract.addVerifier(address).catch((err) => {
       console.log(err);
     });
-    alert(`証人は${address}です。達成したら証人に報告してね。`)
+    alert(`見届け人は${address}です。達成したら見届け人に報告してね。`)
   }
 
   const fetchVerifier = async () => {

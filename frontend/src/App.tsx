@@ -23,7 +23,7 @@ function WalletAddressForm({ handleSubmit }: WalletAddressFormProps) {
   return (
     <>
       <label>
-        証人のWallet Address:
+        見届け人のWallet Address:
         <input type="text" value={walletAddress} onChange={handleChange} />
       </label>
       <button onClick={_handleSubmit}>Submit</button>
@@ -205,12 +205,12 @@ function App() {
               約束する！(10GOAL)
             </button>}
             {verifier && verifier !== "0x0000000000000000000000000000000000000000" ? (
-              <><br /><p>証人は{verifier}です</p></>
+              <><br /><p>見届け人は{verifier}です</p></>
             ) : <><br />< WalletAddressForm handleSubmit={addVerifier} /></>
             }
             {hasVerified}
             {hasVerified && verifier && verifier !== "0x0000000000000000000000000000000000000000" ? (
-              <><p>証人によって認められました。</p><br /><button className="form-button" onClick={handleWithdraw}>
+              <><p>見届け人によって認められました。</p><br /><button className="form-button" onClick={handleWithdraw}>
                 引き出す
               </button></>
             ) : <p>まだ認められていません</p>
