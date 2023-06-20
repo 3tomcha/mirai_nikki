@@ -57,18 +57,18 @@ LINEなどで、このページのキャプチャと実際に行動した証拠�
 ユーザー
 
 # 技術詳細
-フロントエンド
-・React.js
-・Typescript
+#### フロントエンド<br>
+・React.js<br>
+・Typescript<br>
 
-バックエンド
-・Flask
-・Python
+#### バックエンド
+・Flask<br>
+・Python<br>
 
-コントラクト
-・Solidity
-・Astar shibuya network
-GoalToken
-0x9CE4b49F94E9bbc43D72152B98cc6249087B292B
-GoalContract
+#### コントラクト
+・Solidity<br>
+・Astar shibuya network<br>
+GoalToken<br>
+0x9CE4b49F94E9bbc43D72152B98cc6249087B292B<br>
+GoalContract<br>
 0xa1F2C33a6fB877Ca5970834c99bb9243D6eEb6ec
