@@ -16,7 +16,11 @@ Shibuya testnetがMetamaskのネットワークに追加されていること<br
 GoalTokenを持っていること<br>
 
 ## 使い方
-<img width="789" alt="スクリーンショット 2023-06-20 9 54 24" src="https://github.com/3tomcha/mirai_nikki/assets/15997287/defbb153-45a4-4b03-8d4c-312ad3b8cd16"><br>
+<img width="789" alt="スクリーンショット 2023-06-20 9 54 24" src="https://github.com/3tomcha/mirai_nikki/assets/15997287/8ce550be-765c-40cb-bbb7-77bd014193fe"><br>
+<img width="767" alt="スクリーンショット 2023-06-20 18 22 04" src="https://github.com/3tomcha/mirai_nikki/assets/15997287/29c62c1f-4c92-4dbd-b865-c47201c5d244">
+
+
+
 ### ユーザー
 #### ①スケジュールを作る
 左の入力ボックスに、目標を入力して生成ボタンを押します。<br>
@@ -53,18 +57,19 @@ LINEなどで、このページのキャプチャと実際に行動した証拠�
 ユーザー
 
 # 技術詳細
-フロントエンド
-・React.js
-・Typescript
+#### フロントエンド<br>
+・React.js<br>
+・Typescript<br>
 
-バックエンド
-・Flask
-・Python
+#### バックエンド
+・Flask<br>
+・Python<br>
 
-コントラクト
-・Solidity
-・Astar shibuya network
-GoalToken
-0x9CE4b49F94E9bbc43D72152B98cc6249087B292B
-GoalContract
+#### コントラクト
+・Solidity<br>
+・Astar shibuya network<br>
+<br>
+GoalToken<br>
+0x9CE4b49F94E9bbc43D72152B98cc6249087B292B<br>
+GoalContract<br>
 0xa1F2C33a6fB877Ca5970834c99bb9243D6eEb6ec
