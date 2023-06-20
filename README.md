@@ -7,13 +7,13 @@ Non!それはもう必要ありません。
 <img width="740" alt="スクリーンショット 2023-06-15 20 29 22" src="https://github.com/3tomcha/mirai_nikki/assets/15997287/b2b0b288-016c-4b9b-a422-dea0c6309194">
 
 ## 推奨環境
-PC: Brave最新版
-SP: Metamaskブラウザ最新版
+PC: Brave最新版<br>
+SP: Metamaskブラウザ最新版<br>
 
 ## 動作前提
-Metamaskがインストールされていること
-Shibuya testnetがMetamaskのネットワークに追加されていること
-GoalTokenを持っていること
+Metamaskがインストールされていること<br>
+Shibuya testnetがMetamaskのネットワークに追加されていること<br>
+GoalTokenを持っていること<br>
 
 ## 使い方
 <img width="789" alt="スクリーンショット 2023-06-20 9 54 24" src="https://github.com/3tomcha/mirai_nikki/assets/15997287/defbb153-45a4-4b03-8d4c-312ad3b8cd16"><br>
