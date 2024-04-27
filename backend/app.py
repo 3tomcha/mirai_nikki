@@ -24,7 +24,7 @@ def chat_with_gpt():
     req = request.args
     prompt = req.get("prompt", "")
     response = openai.Completion.create(
-        engine='text-davinci-003',  # 使用するエンジンを指定します
+        engine='gpt-3.5-turbo-1106',  # 使用するエンジンを指定します
         prompt=prompt,
         max_tokens=1000,  # ChatGPTの応答の最大トークン数
         temperature=0.7,  # 生成される応答の多様性を制御します
