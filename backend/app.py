@@ -7,6 +7,7 @@ from stability_sdk import client
 import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 from PIL import Image
 import io
+import requests
 
 load_dotenv()
 openai.api_key=os.getenv("OPENAI_API_KEY")
@@ -55,6 +56,17 @@ def generate():
                     mimetype='image/png'
                 )
 
+@app.route("/location")
+def location():
+    GOOGLEMAP_API_KEY = os.getenv("GOOGLEMAP_API_KEY")
+
+    url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+Tokyo&key={GOOGLEMAP_API_KEY}"
+    response = requests.get(url)
+    data = response.json()
+    print(data)
+    return data
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", port=5001)
 
